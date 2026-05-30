@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEMA — AI Healthcare Triage Sandbox</title>
+    <meta name="description" content="PEMA AI-powered healthcare triage chatbot — internal testing sandbox">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/sandbox/style.css">
+</head>
+<body>
+    <!-- ─── Header ──────────────────────────────────────────────── -->
+    <header id="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">🏥</span>
+                <h1>PEMA</h1>
+            </div>
+            <span class="version-badge" id="version-badge">v1.0.0</span>
+        </div>
+        <div class="header-right">
+            <div class="lang-toggle" id="mode-toggle" style="margin-right: 8px;">
+                <button class="mode-btn lang-btn active" data-mode="patient">Patient</button>
+                <button class="mode-btn lang-btn" data-mode="doctor">Doctor</button>
+            </div>
+            <div class="lang-toggle" id="lang-toggle">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="ur">UR</button>
+            </div>
+            <button class="btn-icon" id="btn-new-session" title="New Session">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                <span>New Chat</span>
+            </button>
+            <a href="/sandbox/admin.html" class="btn-icon btn-secondary" title="Admin Dashboard">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 9l4-18l3 9h4"/></svg>
+                <span>Admin</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ─── App Body ────────────────────────────────────────────── -->
+    <div class="app-body">
+        <!-- ─── Sidebar ─────────────────────────────────────────────── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>History</h2>
+            </div>
+            <div class="sidebar-list" id="sidebar-list">
+                <div style="padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+                    <span class="spinner"></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ─── Main Content ────────────────────────────────────────── -->
+        <div class="main-content">
+            <!-- ─── Session Info Bar ────────────────────────────────────── -->
+            <div class="session-bar" id="session-bar">
+        <div class="session-info">
+            <span class="session-label">Session</span>
+            <code class="session-id" id="session-id">—</code>
+            <span class="session-status" id="session-status">Initializing…</span>
+        </div>
+        <div class="session-meta">
+            <span class="turn-count" id="turn-count">Turn 0</span>
+        </div>
+    </div>
+
+    <!-- ─── Chat Area ───────────────────────────────────────────── -->
+    <main id="chat-area">
+        <div class="messages-container" id="messages-container">
+            <!-- Messages rendered here by JS -->
+        </div>
+    </main>
+
+    <!-- ─── Emergency Alert (hidden by default) ─────────────────── -->
+    <div class="emergency-alert hidden" id="emergency-alert">
+        <div class="emergency-icon">🚨</div>
+        <div class="emergency-text">
+            <strong>Session Escalated — Emergency Detected</strong>
+            <p>This session has been flagged for emergency. No further messages can be sent.</p>
+        </div>
+    </div>
+
+    <!-- ─── Completion Banner (hidden by default) ───────────────── -->
+    <div class="completion-banner hidden" id="completion-banner">
+        <div class="completion-icon">✅</div>
+        <div class="completion-text">
+            <strong>Triage Complete</strong>
+            <p id="completion-summary">Recommendation has been provided.</p>
+        </div>
+    </div>
+
+    <!-- ─── Input Area ──────────────────────────────────────────── -->
+    <footer id="input-area">
+        <div class="input-wrapper">
+            <textarea 
+                id="message-input"
+                placeholder="Describe your symptoms…"
+                rows="1"
+                maxlength="2000"
+                autocomplete="off"
+            ></textarea>
+            <button id="btn-send" class="btn-send" disabled title="Send message">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+        </div>
+    </footer>
+        </div>
+    </div>
+
+    <script src="/sandbox/app.js"></script>
+</body>
+</html>

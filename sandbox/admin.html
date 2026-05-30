@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEMA — Admin Dashboard</title>
+    <meta name="description" content="PEMA admin dashboard for reviewing triage sessions">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/sandbox/style.css">
+</head>
+<body>
+    <!-- ─── Header ──────────────────────────────────────────────── -->
+    <header id="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">🏥</span>
+                <h1>PEMA</h1>
+            </div>
+            <span class="version-badge">Admin</span>
+        </div>
+        <div class="header-right">
+            <a href="/sandbox/" class="btn-icon" title="Chat Sandbox">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span>Chat</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ─── Main Content ────────────────────────────────────────── -->
+    <main class="admin-scroll-area">
+        <div class="admin-container">
+            <div class="admin-title">
+                <span class="icon">📊</span>
+                Session Dashboard
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <select class="filter-select" id="filter-status">
+                    <option value="">All Statuses</option>
+                    <option value="consent_framing">Consent / Framing</option>
+                    <option value="chief_complaint">Chief Complaint</option>
+                    <option value="fact_gathering">Fact Gathering</option>
+                    <option value="specialty_routing">Specialty Routing</option>
+                    <option value="completed">Completed</option>
+                    <option value="escalated">Escalated</option>
+                    <option value="abandoned">Abandoned</option>
+                </select>
+                <button class="btn-refresh" id="btn-refresh">
+                    <span class="spinner hidden" id="refresh-spinner"></span>
+                    Refresh
+                </button>
+                <span id="session-count" style="font-size: 0.78rem; color: var(--text-muted); margin-left: auto;">—</span>
+            </div>
+
+            <!-- Sessions Table -->
+            <table class="sessions-table" id="sessions-table">
+                <thead>
+                    <tr>
+                        <th>Session ID</th>
+                        <th>Status</th>
+                        <th>Language</th>
+                        <th>Specialty</th>
+                        <th>Urgency</th>
+                        <th>Turns</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody id="sessions-tbody">
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <div class="icon">📋</div>
+                            <p>Loading sessions…</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Detail Panel (hidden by default) -->
+            <div class="detail-panel hidden" id="detail-panel">
+                <div class="detail-header">
+                    <h2 id="detail-title">Session Details</h2>
+                    <button class="btn-close-detail" id="btn-close-detail">✕ Close</button>
+                </div>
+                <div class="detail-body" id="detail-body">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/sandbox/admin.js"></script>
+</body>
+</html>

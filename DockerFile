@@ -1,0 +1,20 @@
+# Use the exact Python version required by your pyproject.toml
+FROM python:3.12-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy all of your project files into the container
+COPY . .
+
+# Install your application using the build command from your guide
+# This reads your pyproject.toml and installs all dependencies
+RUN pip install --no-cache-dir .
+
+# Expose the port. 
+# Note: 7860 is the required default port if you use Hugging Face Spaces. 
+# If you use Back4App, they usually look for 8080 or read the $PORT env variable.
+EXPOSE 7860
+
+# The command to start your FastAPI app
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7860"]

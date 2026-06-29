@@ -17,6 +17,10 @@
     const $input = document.getElementById('message-input');
     const $btnSend = document.getElementById('btn-send');
     const $btnNew = document.getElementById('btn-new-session');
+    const $btnSidebarNew = document.getElementById('btn-sidebar-new-session');
+    const $btnSidebarToggle = document.getElementById('btn-sidebar-toggle');
+    const $sidebarBackdrop = document.getElementById('sidebar-backdrop');
+    const $sidebar = document.getElementById('sidebar');
     const $sessionId = document.getElementById('session-id');
     const $sessionStatus = document.getElementById('session-status');
     const $turnCount = document.getElementById('turn-count');
@@ -300,6 +304,7 @@
                     if (currentSessionId !== s.id) {
                         loadSession(s.id);
                     }
+                    closeSidebar();
                 });
 
                 const deleteBtn = el.querySelector('.btn-delete-session');
@@ -480,44 +485,80 @@
         $btnSend.disabled = !$input.value.trim() || isProcessing;
     });
 
-    // New session button
-    $btnNew.addEventListener('click', createSession);
+    // Sidebar drawer toggling
+    if ($btnSidebarToggle) {
+        $btnSidebarToggle.addEventListener('click', openSidebar);
+    }
+    if ($sidebarBackdrop) {
+        $sidebarBackdrop.addEventListener('click', closeSidebar);
+    }
 
-    const $langToggle = document.getElementById('lang-toggle');
-    if ($langToggle) {
-        $langToggle.addEventListener('click', (e) => {
+    function openSidebar() {
+        if ($sidebar) $sidebar.classList.add('open');
+        if ($sidebarBackdrop) $sidebarBackdrop.classList.add('visible');
+    }
+
+    function closeSidebar() {
+        if ($sidebar) $sidebar.classList.remove('open');
+        if ($sidebarBackdrop) $sidebarBackdrop.classList.remove('visible');
+    }
+
+    // New session button (both header and sidebar)
+    if ($btnNew) {
+        $btnNew.addEventListener('click', () => {
+            createSession();
+            closeSidebar();
+        });
+    }
+    if ($btnSidebarNew) {
+        $btnSidebarNew.addEventListener('click', () => {
+            createSession();
+            closeSidebar();
+        });
+    }
+
+    // Language toggle click handlers (both header and sidebar)
+    const $$langToggles = document.querySelectorAll('#lang-toggle, .sidebar-lang-toggle');
+    $$langToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
             const btn = e.target.closest('.lang-btn');
             if (!btn) return;
 
-            $langToggle.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        currentLanguage = btn.dataset.lang;
+            currentLanguage = btn.dataset.lang;
 
-        // Update placeholder
-        $input.placeholder = currentLanguage === 'ur'
-            ? 'Apni alamaat batayen…'
-            : 'Describe your symptoms…';
+            // Sync active state on all language buttons
+            document.querySelectorAll('.lang-btn[data-lang]').forEach(b => {
+                b.classList.toggle('active', b.dataset.lang === currentLanguage);
+            });
 
-        // Update session
-        updateSession();
-    });
-    }
-
-    // Mode toggle
-    const $modeToggle = document.getElementById('mode-toggle');
-    if ($modeToggle) {
-        $modeToggle.addEventListener('click', (e) => {
-            const btn = e.target.closest('.mode-btn');
-            if (!btn) return;
-
-            $modeToggle.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentMode = btn.dataset.mode;
+            // Update placeholder
+            $input.placeholder = currentLanguage === 'ur'
+                ? 'Apni alamaat batayen…'
+                : 'Describe your symptoms…';
 
             // Update session
             updateSession();
         });
-    }
+    });
+
+    // Mode toggle click handlers (both header and sidebar)
+    const $$modeToggles = document.querySelectorAll('#mode-toggle, .sidebar-mode-toggle');
+    $$modeToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            const btn = e.target.closest('.mode-btn');
+            if (!btn) return;
+
+            currentMode = btn.dataset.mode;
+
+            // Sync active state on all mode buttons
+            document.querySelectorAll('.mode-btn[data-mode]').forEach(b => {
+                b.classList.toggle('active', b.dataset.mode === currentMode);
+            });
+
+            // Update session
+            updateSession();
+        });
+    });
 
     // ── Init ─────────────────────────────────────────────────────────
     createSession();

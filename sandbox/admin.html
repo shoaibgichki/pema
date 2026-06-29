@@ -56,27 +56,29 @@
             </div>
 
             <!-- Sessions Table -->
-            <table class="sessions-table" id="sessions-table">
-                <thead>
-                    <tr>
-                        <th>Session ID</th>
-                        <th>Status</th>
-                        <th>Language</th>
-                        <th>Specialty</th>
-                        <th>Urgency</th>
-                        <th>Turns</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody id="sessions-tbody">
-                    <tr>
-                        <td colspan="7" class="empty-state">
-                            <div class="icon">📋</div>
-                            <p>Loading sessions…</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="sessions-table" id="sessions-table">
+                    <thead>
+                        <tr>
+                            <th>Session ID</th>
+                            <th>Status</th>
+                            <th>Language</th>
+                            <th>Specialty</th>
+                            <th>Urgency</th>
+                            <th>Turns</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sessions-tbody">
+                        <tr>
+                            <td colspan="7" class="empty-state">
+                                <div class="icon">📋</div>
+                                <p>Loading sessions…</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Detail Panel (hidden by default) -->
             <div class="detail-panel hidden" id="detail-panel">
